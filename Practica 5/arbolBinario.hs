@@ -71,3 +71,23 @@ inOrden (Node r hi hd) = inOrden hi ++ [r] ++ inOrden hd
 postOrden :: BinTree a -> [a]
 postOrden Null = []
 postOrden (Node r hi hd) = postOrden hi ++ postOrden hd ++ [r]
+
+
+-- Funcion espejo que dado un arbol devuelve la imagen reflejada del arbol
+espejo :: BinTree a -> BinTree a
+espejo Null = Null
+espejo (Node r hi hd) = Node r (espejo hd) (espejo hi)
+
+
+-- Funcion mapTree que aplica una funcion a cada elemento dentro de los
+-- nodos del arbol
+mapTree :: (a -> b) -> (BinTree a) -> (BinTree b)
+mapTree f Null = Null
+mapTree f (Node r hi hd) = Node (f r) (mapTree f hi) (mapTree f hd)
+
+
+
+
+
+
+
