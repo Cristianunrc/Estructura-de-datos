@@ -52,7 +52,7 @@ elimina x (Nodo r Null hd) | x == r = hd
 elimina x (Nodo r hi hd) | x < r = Nodo r (elimina x hi) hd
                          | x > r = Nodo r hi (elimina x hd)
                          | x == r = Nodo x' hi (elimina x' hd)
-                                       where x' = minimo hd
+                                       where x' = minimo hd   -- el minimo elemento del sub-arbol derecho pasa a ser la raiz del arbol.
 
 
 -- busca el minimo valor del sub-arbol derecho, se utiliza dentro de funcion elimina.
