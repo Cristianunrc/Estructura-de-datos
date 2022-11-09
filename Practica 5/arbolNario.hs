@@ -7,17 +7,18 @@ data NTree a = Null | Nodo a [NTree a]  deriving Show
 
 -- funcion para usar con las operaciones del arbol.
 valor :: NTree Integer -- devuelve un arbol n-ario de Integer
-valor = Nodo 20 [a1, a2, a3]
+valor = Nodo 20 [a1, a2, a3, a4]
   where 
     a1 = Nodo 22 [hoja 30, hoja 15]
     a2 = hoja 3
     a3 = Nodo 5 [hoja 6]
+    a4 = Nodo 1 [hoja 3, hoja 2, hoja 4]
 
---		 20
---	      /  |  \ 
---	    22  3   5
---         / \      /
---       30  15    6
+--		   20
+--	      /  |  \    \ 
+--	    22  3   5    1
+--         / \     /   / \ \
+--       30  15   6   3  2 4
 
 -- funcion que se usa dentro de la funcion valor.
 hoja :: a -> NTree a
@@ -51,6 +52,3 @@ sumatoria (Nodo r xs) = r + sum (map sumatoria xs)
 esVacio :: NTree a -> Bool
 esVacio Null = True
 esVacio (Nodo _ xs) = False
-
-
-
