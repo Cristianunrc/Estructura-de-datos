@@ -8,17 +8,17 @@ data ABB a = Null | Nodo a (ABB a) (ABB a) deriving Show
 
 -- funcion que construye un arbol binario de busqueda. Para usar con cada operacion
 valor :: ABB Integer
-valor = (Nodo 6 ( Nodo 5 (Nodo 3 Null Null) (Nodo 4 Null Null) ) (Nodo 9 Null Null) )
+valor = (Nodo 6 ( Nodo 4 (Nodo 3 Null Null) (Nodo 5 Null Null) ) (Nodo 9 Null Null) )
 
 --           6
 --         /   \
---        5    9
+--        4    9
 --      /  \
---     3   4
+--     3   5
 
 
 valor1 :: ABB Integer
-valor1 = (Nodo 4 ( Nodo 2 (Nodo 1 Null Null) (Nodo 3 Null Null) ) ( Nodo 6 (Nodo 5 Null Null) (Nodo 7 Null Null) ) )
+valor1 = (Nodo 4 ( Nodo 2 (Nodo 1 Null Null) (Nodo 3 Null Null) ) (Nodo 6 (Nodo 5 Null Null) (Nodo 7 Null Null) ) )
 
 --           4
 --         /   \
@@ -46,13 +46,13 @@ pertenece x (Nodo r hi hd) | x == r = True
 
 -- elimina un elemento dado del arbol.
 elimina :: (Ord a) => a -> ABB a -> ABB a
-elimina x Null = Null
+elimina x Null = error "Eliminar sobre arbol vacio."
 elimina x (Nodo r hi Null) | x == r = hi
 elimina x (Nodo r Null hd) | x == r = hd
 elimina x (Nodo r hi hd) | x < r = Nodo r (elimina x hi) hd
                          | x > r = Nodo r hi (elimina x hd)
                          | x == r = Nodo x' hi (elimina x' hd)
-                                       where x' = minimo hd   -- el minimo elemento del sub-arbol derecho pasa a ser la raiz del arbol.
+                                       where x' = minimo hd
 
 
 -- busca el minimo valor del sub-arbol derecho, se utiliza dentro de funcion elimina.
@@ -60,3 +60,16 @@ minimo :: Ord a => ABB a -> a
 minimo (Nodo r Null _) = r -- raiz, hi (vacio), no importa que tenga hd
 minimo (Nodo _ hi _) = minimo hi -- no importa que tenga raiz, hi, 
                                 -- no importa que tenga hd
+
+-- funcion que rota un arbol de izquierda a derecha.
+rotateIzqtoDer :: ABB a -> ABB a
+rotateIzqtoDer Null = Null
+--		       -   hijo izq  -                    -   hijo der  -   
+rotateIzqtoDer (Nodo r (Nodo r' hi hd') hd) = (Nodo r' hi (Nodo r hd' hd))
+
+
+-- funcion que rota un arbol de derecha a izquierda
+rotateDertoIzq :: ABB a -> ABB a
+rotateDertoIzq Null = Null
+--                        -   hijo der  -              -   hijo izq  -  
+rotateDertoIzq (Nodo r hi (Nodo r' hi' hd)) = (Nodo r' (Nodo r hi hi') hd)
